@@ -9,11 +9,12 @@ NAME 	=	jam-binary
 SRC		=	$(wildcard src/**/*.c src/*.c)
 OBJ 	= 	$(SRC:.c=.o)
 ARGS 	= 	`arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
-CFLAGS 	=	-Llib/ -lmy -g3 -Wall -Wextra
+LFLAGS 	=	-Llib/ -lmy -l csfml-system -lcsfml-window -l csfml-graphics -l csfml-audio
+CFLAGS 	=	-g3 -Wall -Wextra
 
 $(NAME):
 		cd lib; make re
-		gcc -o $(NAME) $(SRC) $(CFLAGS)
+		gcc -o $(NAME) $(SRC) $(LFLAGS) $(CFLAGS)
 
 all:	$(NAME)
 
