@@ -1,0 +1,7 @@
+jam-binary
+*.a
+*.o
+*.txt
+*.pdf
+vgcore.*
+test/
