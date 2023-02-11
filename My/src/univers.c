@@ -54,3 +54,28 @@ void panther_univers(sfRenderWindow *window, sfEvent event)
         sfRenderWindow_display(window);
     }
 }
+
+void shang_chi_univers(sfRenderWindow *window, sfEvent event)
+{
+    sfTexture *uni = sfTexture_createFromFile("./image/Univers Shang Chi.jpg", NULL);
+    sfSprite *uni_s = sfSprite_create();
+    sfVector2f uni_scl = {1.52, 1.42};
+    sfMusic *music = sfMusic_createFromFile("./song/Shang-Chi.ogg");
+    sfSprite_setTexture(uni_s, uni, sfTrue);
+    sfSprite_setScale(uni_s, uni_scl);
+    sfMusic_play(music);
+
+    while (sfRenderWindow_isOpen(window)) {
+        while (sfRenderWindow_pollEvent(window, &event)) {
+            if (event.type == sfEvtClosed) {
+                sfRenderWindow_close(window);
+            } else if (((event.type == sfEvtKeyPressed) &&
+                (event.key.code == sfKeyM))) {
+                sfRenderWindow_close(window);
+            }
+        }
+        sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_drawSprite(window, uni_s, NULL);
+        sfRenderWindow_display(window);
+    }
+}

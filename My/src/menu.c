@@ -40,6 +40,18 @@ void univers2(sfRenderWindow *window, sfEvent event)
     }
 }
 
+void univers3(sfRenderWindow *window, sfEvent event)
+{
+    sfVector2i mouse = sfMouse_getPosition(window);
+    if (mouse.x >= 1401 && mouse.x <= 1720) {
+        if (mouse.y >= 351 && mouse.y <= 529) {
+            if (event.type == sfEvtMouseButtonPressed) {
+                shang_chi_univers(window, event);
+            }
+        }
+    }
+}
+
 void loop_game(GLOBAL_T *ALL)
 {
     int batx = 100;
@@ -83,6 +95,14 @@ void loop_game(GLOBAL_T *ALL)
     sfSprite_setTexture(img2_s, img2, sfTrue);
     sfSprite_setPosition(img2_s, img2_loc);
     sfSprite_setScale(img2_s, img2_scl);
+
+    sfTexture *img3 = sfTexture_createFromFile("./image/Univers Shang Chi.jpg", NULL);
+    sfSprite *img3_s = sfSprite_create();
+    sfVector2f img3_scl = {0.25, 0.25};
+    sfVector2f img3_loc = {1400, 350};
+    sfSprite_setTexture(img3_s, img3, sfTrue);
+    sfSprite_setPosition(img3_s, img3_loc);
+    sfSprite_setScale(img3_s, img3_scl);
 
     while (sfRenderWindow_isOpen(WIN)) {
         while (sfRenderWindow_pollEvent(WIN, &EVENT)) {
@@ -133,10 +153,12 @@ void loop_game(GLOBAL_T *ALL)
         sfRenderWindow_clear(WIN, sfBlack);
         sfRenderWindow_drawSprite(WIN, img_s, NULL);
         sfRenderWindow_drawSprite(WIN, img2_s, NULL);
+        sfRenderWindow_drawSprite(WIN, img3_s, NULL);
         sfRenderWindow_drawSprite(WIN, bat_s, NULL);
         sfRenderWindow_drawSprite(WIN, bat2_s, NULL);
         sfRenderWindow_display(WIN);
         univers1(WIN, EVENT);
         univers2(WIN, EVENT);
+        univers3(WIN, EVENT);
     }
 }

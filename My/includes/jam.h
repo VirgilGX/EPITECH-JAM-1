@@ -35,5 +35,6 @@ void loop_game(GLOBAL_T *ALL);
 void window_menu(GLOBAL_T *ALL);
 void batman_univers(sfRenderWindow *window, sfEvent event);
 void panther_univers(sfRenderWindow *window, sfEvent event);
+void shang_chi_univers(sfRenderWindow *window, sfEvent event);
 
 #endif /* HUNTER_H_ */
