@@ -1,0 +1,9 @@
+assets/ -> contains all assets used for our program
+
+effects -> contains all soundeffects
+fonts -> contains all fonts
+musics -> contains all music
+pictures -> contains all pictures
+sprites -> contains all sprite
+
+WARNING : All assets of same type need to have the SAME extension and SAME dimension (for pictures and sprites) 
