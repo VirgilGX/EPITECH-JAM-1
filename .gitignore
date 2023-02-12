@@ -1,4 +1,4 @@
-jam-binary
+jam
 *.a
 *.o
 *.pdf

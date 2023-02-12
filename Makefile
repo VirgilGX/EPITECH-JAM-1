@@ -5,7 +5,7 @@
 ## Makefile of JAM 1
 ##
 
-NAME 	=	jam-binary
+NAME 	=	jam
 SRC		=	$(wildcard src/**/*.c src/*.c)
 OBJ 	= 	$(SRC:.c=.o)
 ARGS 	= 	`arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
