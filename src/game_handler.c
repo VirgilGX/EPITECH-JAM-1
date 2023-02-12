@@ -186,9 +186,11 @@ game_t game_loop(game_t g)
         sfSprite_setPosition(g.bat, (sfVector2f) {mouse.x - 30, mouse.y - 30});
         while (sfRenderWindow_pollEvent(g.window, &g.event)) {
             if (g.event.type == sfEvtClosed)
-                sfRenderWindow_close(g.window);
+                sfRenderWindow_close(g.window),
+                free_menu(g.window);
             if (g.event.type == sfEvtKeyPressed && g.event.key.code == sfKeyEscape)
-                sfRenderWindow_close(g.window);
+                sfRenderWindow_close(g.window),
+                free_menu(g.window);
             if (g.event.type == sfEvtMouseButtonPressed && g.event.mouseButton.button == sfMouseLeft) {
                 g.state = check_charlo(g, mouse);
             }
@@ -198,7 +200,6 @@ game_t game_loop(game_t g)
             sfMusic_stop(g.map_music);
             sfMusic_setLoop(g.map_music, sfFalse);
             sfRenderWindow_drawText(g.window, g.win, 0);
-            // wait(5000);
             g.state = 0;
             update_game(g);
             return g;
