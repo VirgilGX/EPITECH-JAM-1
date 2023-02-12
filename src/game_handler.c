@@ -24,12 +24,13 @@ sfIntRect create_intrect_bat(void)
     return (bat);
 }
 
-sfSprite *animate_bat(game_t g)
+game_t animate_bat(game_t g)
 {
     g.bat_rect.left += 32;
-    if (g.bat_rect.left == 192)
+    if (g.bat_rect.left >= 192)
         g.bat_rect.left = 0;
     sfSprite_setTextureRect(g.bat, g.bat_rect);
+    return g;
 }
 
 game_t check_clock(game_t g)
@@ -37,8 +38,8 @@ game_t check_clock(game_t g)
     float seconds = 0;
     sfTime time = sfClock_getElapsedTime(g.clock);
     seconds = time.microseconds / 2500000.0;
-    if (seconds > (0.035)) {
-        g.bat = animate_bat(g);
+    if (seconds > (0.04)) {
+        g = animate_bat(g);
         sfClock_restart(g.clock);
     }
     return g;
@@ -93,7 +94,7 @@ game_t init_game()
     game.bg = create_sprite("resources/images/menu-background.png", 0, 0, 1);
     game.logo = create_sprite("resources/images/logo.png", 750, 100, 1);
     game.charlo = create_sprite("resources/images/charlo.png", 1100, 100, 0.40);
-    game.bat = create_sprite("resources/images/bat.png", 0, 0, 1);
+    game.bat = create_sprite("resources/images/bat.png", 0, 0, 2);
     game.bat_rect = create_intrect_bat();
     sfSprite_setTextureRect(game.bat, game.bat_rect);
     menu_t menu = init_menu();
@@ -101,6 +102,7 @@ game_t init_game()
     sfEvent event;
     game.event = event;
     game.state = 0;
+    game.clock = sfClock_create();
     return game;
 }
 
@@ -140,14 +142,17 @@ int check_charlo(game_t g, sfVector2i mouse)
     return g.state;
 }
 
-void display_game(game_t g)
+game_t display_game(game_t g)
 {
     sfRenderWindow_display(g.window);
     sfRenderWindow_drawSprite(g.window, g.current_background, 0);
     sfRenderWindow_drawSprite(g.window, g.charlo, 0);
-    // check_clock(g);
-    if (g.state == 2)
+    if (g.state == 2) {
+        g = check_clock(g);
+        sfWindow_setMouseCursorVisible(g.window, false);
         sfRenderWindow_drawSprite(g.window, g.bat, 0);
+    }
+    return g;
 }
 
 game_t update_game(game_t g)
@@ -178,7 +183,7 @@ game_t game_loop(game_t g)
     g = update_game(g);
     while (sfRenderWindow_isOpen(g.window)) {
         mouse = sfMouse_getPosition(g.window);
-        sfSprite_setPosition(g.bat, (sfVector2f) {mouse.x, mouse.y});
+        sfSprite_setPosition(g.bat, (sfVector2f) {mouse.x - 30, mouse.y - 30});
         while (sfRenderWindow_pollEvent(g.window, &g.event)) {
             if (g.event.type == sfEvtClosed)
                 sfRenderWindow_close(g.window);
@@ -189,6 +194,7 @@ game_t game_loop(game_t g)
             }
         }
         if (g.state == -1) {
+            sfWindow_setMouseCursorVisible(g.window, true);
             sfMusic_stop(g.map_music);
             sfMusic_setLoop(g.map_music, sfFalse);
             printf("gagné\n");
@@ -196,7 +202,7 @@ game_t game_loop(game_t g)
             update_game(g);
             //return g;
         }
-        display_game(g);
+        g = display_game(g);
     }
 }
 
