@@ -78,7 +78,6 @@ int check_univers(game_t g, sfVector2i mouse)
     for (int i = 0; g.menu.univer_selection[i] != NULL; i++) {
         shape = sfSprite_getGlobalBounds(g.menu.univer_selection[i]);
         if (sfFloatRect_contains(&shape, mouse.x, mouse.y)) {
-            printf("%d\n", i);
             return (i + 1);
         }
     }
