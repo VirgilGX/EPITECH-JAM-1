@@ -42,6 +42,7 @@ typedef struct game {
     struct menu menu;
     sfRenderWindow *window;
     sfSprite *charlo;
+    sfSprite *current_background;
     sfEvent event;
     int state;
 } game_t;
