@@ -23,7 +23,7 @@ sfText *create_text(char *str, int x, int y, unsigned s)
 {
     sfVector2f text_vec = {x, y};
     sfText *text = sfText_create();
-    sfFont *font = sfFont_createFromFile("assets/minecraft.ttf");
+    sfFont *font = sfFont_createFromFile("resources/fonts/ARCADE_R.TTF");
     sfText_setCharacterSize(text, s);
     sfText_setPosition(text, text_vec);
     sfText_setFont(text, font);

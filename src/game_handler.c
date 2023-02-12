@@ -101,6 +101,7 @@ game_t init_game()
     sfEvent event;
     game.event = event;
     game.state = 0;
+    game.win = create_text("Victoire", 500, 500, 100);
     return game;
 }
 
@@ -147,6 +148,7 @@ void display_game(game_t g)
     sfRenderWindow_drawSprite(g.window, g.charlo, 0);
     // check_clock(g);
     if (g.state == 2)
+        // g.window->setMouseCursorVisible(false);
         sfRenderWindow_drawSprite(g.window, g.bat, 0);
 }
 
@@ -191,10 +193,11 @@ game_t game_loop(game_t g)
         if (g.state == -1) {
             sfMusic_stop(g.map_music);
             sfMusic_setLoop(g.map_music, sfFalse);
-            printf("gagné\n");
+            sfRenderWindow_drawText(g.window, g.win, 0);
+            // wait(5000);
             g.state = 0;
             update_game(g);
-            //return g;
+            return g;
         }
         display_game(g);
     }
