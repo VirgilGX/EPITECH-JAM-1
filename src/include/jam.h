@@ -20,7 +20,6 @@
     #include <stdlib.h>
     #include <unistd.h>
     #include <time.h>
-    #include "../../lib/src/include/my_lib.h"
 
 typedef struct Picture {
     sfTexture *texture;
@@ -38,6 +37,14 @@ typedef struct Game_time {
 typedef struct menu {
     sfSprite **univer_selection;
 } menu_t;
+
+typedef struct game {
+    struct menu menu;
+    sfRenderWindow *window;
+    sfSprite *charlo;
+    sfEvent event;
+    int state;
+} game_t;
 
 int game_init(void);
 sfSprite *create_sprite(char *name, int posx, int posy, double scale);
