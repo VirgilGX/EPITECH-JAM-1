@@ -68,7 +68,6 @@ void display_menu(game_t g)
 {
     sfRenderWindow_drawSprite(g.window, g.bg, 0);
     sfRenderWindow_drawSprite(g.window, g.logo, 0);
-    sfRenderWindow_drawSprite(g.window, g.charlo, 0);
     for (int i = 0; g.menu.univer_selection[i] != NULL; i++)
         sfRenderWindow_drawSprite(g.window, g.menu.univer_selection[i], 0);
 }
