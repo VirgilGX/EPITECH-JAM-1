@@ -20,6 +20,9 @@
     #include <stdlib.h>
     #include <unistd.h>
     #include <time.h>
+    #include <signal.h>
+    #include <fcntl.h>
+    #include <sys/types.h>
 
 typedef struct Picture {
     sfTexture *texture;
@@ -35,14 +38,22 @@ typedef struct Game_time {
 } game_time_t;
 
 typedef struct menu {
+    sfMusic *ambiant;
+    sfSound *teleport;
     sfSprite **univer_selection;
 } menu_t;
 
 typedef struct game {
     struct menu menu;
+    sfMusic *map_music;
     sfRenderWindow *window;
     sfSprite *charlo;
     sfSprite *current_background;
+    sfSprite *bat;
+    sfSprite *bg;
+    sfSprite *logo;
+    sfIntRect bat_rect;
+    sfClock *clock;
     sfEvent event;
     int state;
 } game_t;
