@@ -52,6 +52,7 @@ typedef struct game {
     sfSprite *bat;
     sfSprite *bg;
     sfSprite *logo;
+    sfText *win;
     sfIntRect bat_rect;
     sfClock *clock;
     sfEvent event;
