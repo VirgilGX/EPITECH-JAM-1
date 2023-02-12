@@ -9,7 +9,7 @@
 
 int display_usage(void)
 {
-    printf("USAGE\n     ./jam\n\nDESCRIPTION\n     Shoot all planets to destroy them without lose life\n     You lose the game when you shoot and destroy Pluton\n");
+    printf("USAGE\n\t./jam\n\nGOAL\n\tfind Charlo to stop him");
     fflush(stdout);
     return (GOOD_EXIT);
 }

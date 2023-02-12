@@ -19,15 +19,17 @@ menu_t init_menu()
 {
     menu_t buffer;
     buffer.univer_selection = malloc(sizeof(sfSprite *) * 4);
-    buffer.univer_selection[0] = create_sprite("resources/images/jmj.jpg", 850, 350, 0.2);
-    buffer.univer_selection[1] = create_sprite("resources/images/gotham.jpg", 150, 350, 0.2);
-    buffer.univer_selection[2] = create_sprite("resources/images/plage.jpg", 1400, 350, 0.2);
+    buffer.univer_selection[0] = create_sprite("resources/images/jmj.jpg", 850, 450, 0.2);
+    buffer.univer_selection[1] = create_sprite("resources/images/gotham.jpg", 150, 450, 0.2);
+    buffer.univer_selection[2] = create_sprite("resources/images/plage.jpg", 1400, 450, 0.2);
     buffer.univer_selection[3] = NULL;
     return buffer;
 }
 
 void display_menu(game_t g)
 {
+    sfSprite *logo = create_sprite("resources/images/logo.png", 900, 100, 1);
+    sfRenderWindow_drawSprite(g.window, logo, 0);
     for (int i = 0; g.menu.univer_selection[i] != NULL; i++) {
         sfRenderWindow_drawSprite(g.window, g.menu.univer_selection[i], 0);
     }
@@ -63,13 +65,53 @@ game_t init_game()
 
 game_t set_charlo(game_t g)
 {
+    switch (g.state) {
+        case 1:
+            sfSprite_setPosition(g.charlo, (sfVector2f){850, 350});
+            break;
+        case 2:
+            sfSprite_setPosition(g.charlo, (sfVector2f){150, 350});
+            break;
+        case 3:
+            sfSprite_setPosition(g.charlo, (sfVector2f){1400, 350});
+            break;
+        default:
+            break;
+    }
     return g;
+}
+
+int check_charlo(game_t g, sfVector2i mouse)
+{
+    sfFloatRect shape = sfSprite_getGlobalBounds(g.charlo);
+        if (sfFloatRect_contains(&shape, mouse.x, mouse.y)) {
+            return (-1);
+        }
+    return g.state;
+}
+
+void display_game()
+{
+
 }
 
 game_t game_loop(game_t g)
 {
+    sfRenderWindow_clear(g.window, sfBlack);
+    sfSprite_setScale(g.menu.univer_selection[g.state - 1], (sfVector2f) {1, 1});
     printf("%d\n", g.state);
-    exit(0);
+    sfVector2i mouse;
+    while (sfRenderWindow_isOpen(g.window)) {
+        mouse = sfMouse_getPosition(g.window);
+        if (g.event.type == sfEvtMouseButtonPressed && g.event.mouseButton.button == sfMouseLeft) {
+            g.state = check_charlo(g, mouse);
+        }
+        if (g.state == -1) {
+            printf("gagné\n");
+            exit(0);
+        }
+        display_game();
+    }
 }
 
 int game_init(void)
