@@ -194,7 +194,7 @@ game_t game_loop(game_t g)
             printf("gagné\n");
             g.state = 0;
             update_game(g);
-            break;
+            //return g;
         }
         display_game(g);
     }
@@ -226,6 +226,6 @@ int game_init(void)
         display_menu(g);
     }
     sfRenderWindow_clear(g.window, sfBlack);
-    free_menu(g.window);
+    //free_menu(g.window);
     return 0;
 }
