@@ -35,5 +35,11 @@ typedef struct Game_time {
     float seconds;
 } game_time_t;
 
+typedef struct menu {
+    sfSprite **univer_selection;
+} menu_t;
+
 int game_init(void);
+sfSprite *create_sprite(char *name, int posx, int posy, double scale);
+sfText *create_text(char *str, int x, int y, unsigned s);
 #endif
