@@ -9,7 +9,7 @@ NAME 	=	jam
 SRC		=	$(wildcard src/**/*.c src/*.c)
 OBJ 	= 	$(SRC:.c=.o)
 ARGS 	= 	`arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
-LFLAGS 	=	-l csfml-system -lcsfml-window -l csfml-graphics -l csfml-audio
+LFLAGS 	=	-l csfml-system -l csfml-window -l csfml-graphics -l csfml-audio
 CFLAGS 	=	-g3 -Wall -Wextra
 
 $(NAME):
