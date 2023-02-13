@@ -45,8 +45,6 @@ game_t check_clock(game_t g)
     return g;
 }
 
-void free_game() {}
-
 menu_t init_menu()
 {
     menu_t buffer;
@@ -97,7 +95,7 @@ game_t init_game()
     sfSprite_setTextureRect(game.bat, game.bat_rect);
     menu_t menu = init_menu();
     game.menu = menu;
-    sfEvent event;
+    sfEvent event = {0};
     game.event = event;
     game.state = 0;
     game.clock = sfClock_create();
@@ -148,7 +146,7 @@ game_t display_game(game_t g)
     sfRenderWindow_drawSprite(g.window, g.charlo, 0);
     if (g.state == 2) {
         g = check_clock(g);
-        sfWindow_setMouseCursorVisible(g.window, false);
+        sfRenderWindow_setMouseCursorVisible(g.window, false);
         sfRenderWindow_drawSprite(g.window, g.bat, 0);
     }
     return g;
@@ -181,7 +179,7 @@ game_t game_loop(game_t g)
     sfVector2i mouse;
     g = update_game(g);
     while (sfRenderWindow_isOpen(g.window)) {
-        mouse = sfMouse_getPosition(g.window);
+        mouse = sfMouse_getPositionRenderWindow(g.window);
         sfSprite_setPosition(g.bat, (sfVector2f) {mouse.x - 30, mouse.y - 30});
         while (sfRenderWindow_pollEvent(g.window, &g.event)) {
             if (g.event.type == sfEvtClosed)
@@ -195,7 +193,7 @@ game_t game_loop(game_t g)
             }
         }
         if (g.state == -1) {
-            sfWindow_setMouseCursorVisible(g.window, true);
+            sfRenderWindow_setMouseCursorVisible(g.window, true);
             sfMusic_stop(g.map_music);
             sfMusic_setLoop(g.map_music, sfFalse);
             sfRenderWindow_drawText(g.window, g.win, 0);
@@ -205,14 +203,15 @@ game_t game_loop(game_t g)
         }
         g = display_game(g);
     }
+    return g;
 }
 
 int game_init(void)
 {
     game_t g = init_game();
-    sfVector2i mouse = sfMouse_getPosition(g.window);
+    sfVector2i mouse = sfMouse_getPositionRenderWindow(g.window);
     while (sfRenderWindow_isOpen(g.window)) {
-        mouse = sfMouse_getPosition(g.window);
+        mouse = sfMouse_getPositionRenderWindow(g.window);
         while (sfRenderWindow_pollEvent(g.window, &g.event)) {
             if (g.event.type == sfEvtClosed)
                 sfRenderWindow_close(g.window),
@@ -233,6 +232,5 @@ int game_init(void)
         display_menu(g);
     }
     sfRenderWindow_clear(g.window, sfBlack);
-    //free_menu(g.window);
     return 0;
 }
